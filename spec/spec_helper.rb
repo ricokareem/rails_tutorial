@@ -8,11 +8,6 @@ Spork.prefork do
   
 end
 
-Spork.each_run do
-  # This code will be run each time you run your specs.
-  
-end
-
 # --- Instructions ---
 # - Sort through your spec_helper file. Place as much environment loading 
 #   code that you don't normally modify during development in the 
@@ -53,4 +48,17 @@ RSpec.configure do |config|
   # examples within a transaction, comment the following line or assign false
   # instead of true.
   config.use_transactional_fixtures = true
+  
+  ActiveSupport::Dependencies.clear
+  
+  def test_sign_in(user)
+    # controller.current_user = user
+    #this fixes a lot of things
+    controller.sign_in(user)
+  end  
+end
+
+Spork.each_run do
+  # This code will be run each time you run your specs.
+  
 end

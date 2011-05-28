@@ -13,7 +13,7 @@ describe "Users"
             fill_in "Password",     :with => ""
             fill_in "Confirmation", :with => ""
             click_button
-            response.should render_template('new')
+            response.should rende(r_template('new')
             response.should have_selector('div#error_explation')
           end.should_not change(User, :count)
         end
@@ -35,6 +35,37 @@ describe "Users"
         end
       end
       
+  end
+      
+  describe "signin" do
+        
+        describe "failure" do
+          it "should not sign user in" do
+            visit signin_path
+            fill_in "Email",     :with => ""
+            fill_in "Password",  :with => ""
+            click_button
+            response.should have_selector('div.flash.error',
+                                          :content => "Invalid")
+            response.should render_template('sessions/new')
+          end
+        end
+        
+        describe "success" do
+          before(:each) do
+            user = Factory(:user)
+          end
+          it "should sign user in and out" do
+            visit signin_path
+            fill_in "Email",     :with => user.email
+            fill_in "Password",  :with => user.password
+            click_button
+            controller.should be_signed_in
+            click_link "Sign out"
+            controller.should be_singned_out
+          end
+        end
+        
   end
 
 end

@@ -18,6 +18,14 @@ module SessionsHelper
     !current_user.nil?
   end
   
+  def sign_out
+    cookies.delete(:remember_token)
+    current_user = nil
+    # self.current_user = nil 
+    #not sure why the self is necessary, made change in spec_helper.rb to use without
+    
+  end
+  
   private
   
     def user_from_remember_token

@@ -21,7 +21,13 @@ class UsersController < ApplicationController
     else    
       @title = "Sign up"
       render 'new'
-    end  
-  end  
+    end
+  end
+  
+  def edit
+    @user = User.find(params[:id])
+    @title = "Edit user"
+  end
+  
   
 end
